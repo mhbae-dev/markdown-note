@@ -7,8 +7,9 @@ import { data } from "./data";
 
 function App() {
   const [notes, setNotes] = React.useState(
-    JSON.parse(localStorage.getItem("notes")) || []
+    () => JSON.parse(localStorage.getItem("notes")) || []
   );
+
   const [currentNoteId, setCurrentNoteId] = React.useState(
     (notes[0] && notes[0].id) || ""
   );
@@ -27,13 +28,27 @@ function App() {
   }
 
   function updateNote(text) {
-    setNotes((oldNotes) =>
-      oldNotes.map((oldNote) => {
-        return oldNote.id === currentNoteId
-          ? { ...oldNote, body: text }
-          : oldNote;
-      })
-    );
+    setNotes((oldNotes) => {
+      const newArray = [];
+      for (let i = 0; i < oldNotes.length; i++) {
+        const oldNote = oldNotes[i];
+        if (oldNote.id === currentNoteId) {
+          newArray.unshift({ ...oldNote, body: text });
+        } else {
+          newArray.push(oldNote);
+        }
+      }
+      return newArray;
+    });
+
+    //This does not rearrange the notes
+    // setNotes((oldNotes) =>
+    //   oldNotes.map((oldNote) => {
+    //     return oldNote.id === currentNoteId
+    //       ? { ...oldNote, body: text }
+    //       : oldNote;
+    //   })
+    // );
   }
 
   function findCurrentNote() {
