@@ -1,8 +1,11 @@
 import React from "react";
 import ReactMde from "react-mde";
 import Showdown from "showdown";
+import "react-mde/lib/styles/css/react-mde-all.css";
 
-const Editor = () => {
+const Editor = ({ currentNote, updateNote }) => {
+  const [selectedTab, setSelectedTab] = React.useState("write");
+
   const converter = new Showdown.Converter({
     tables: true,
     simplifiedAutoLink: true,
@@ -10,22 +13,20 @@ const Editor = () => {
     tasklists: true,
   });
 
-  const [value, setValue] = React.useState("**Hello world!!!**");
-  const [selectedTab, setSelectedTab] =
-    (React.useState < "write") | ("preview" > "write");
-
   return (
-    <div className="container">
+    <section className="pane editor">
       <ReactMde
-        value={value}
-        onChange={setValue}
+        value={currentNote.body}
+        onChange={updateNote}
         selectedTab={selectedTab}
         onTabChange={setSelectedTab}
         generateMarkdownPreview={(markdown) =>
           Promise.resolve(converter.makeHtml(markdown))
         }
+        minEditorHeight={80}
+        heightUnits="vh"
       />
-    </div>
+    </section>
   );
 };
 
