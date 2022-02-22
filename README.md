@@ -1,6 +1,6 @@
 # Makrdown Note App
 
-Meme Generator that works with an external API to populate the page with random images. This project has been built to learn more about managing the state of form inputs and side effects in React using the useEffect() hook.
+A simple notes application using markdown. This project has been built to learn more about CRUD capabilities in React using local storage and State management in React.
 
 Visit this link to see the project live, [click here](https://markdown-note.vercel.app/)!
 
